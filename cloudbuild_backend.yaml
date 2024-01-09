@@ -3,20 +3,24 @@ steps:
   # Backend Steps
     # Step 1: Install dependencies
   - name: 'gcr.io/cloud-builders/npm'
+    id: 'Install dependencies'
     args: ['install']
     dir: 'cloud-bite-backend-master'
 
   # Step 4: Build the Docker image for the backend
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build the Docker image for the backend'
     args: ['build', '-t', 'gcr.io/ccc-gr13-f23/nestjs-backend', '.']
     dir: 'cloud-bite-backend-master'
 
   # Step 5: Push the Docker image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push the Docker image to Google Container Registry'
     args: ['push', 'gcr.io/ccc-gr13-f23/nestjs-backend']
     dir: 'cloud-bite-backend-master'
 
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy container image to Cloud Run'
     entrypoint: gcloud
     args: ['run', 'deploy', 'nestjs-backend-service', '--image', 'gcr.io/ccc-gr13-f23/nestjs-backend:latest', '--region', 'europe-west1', '--platform', 'managed']
