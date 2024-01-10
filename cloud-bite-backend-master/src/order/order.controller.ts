@@ -23,4 +23,9 @@ export class OrderController {
   createOrder(@Body() orderData: Order): Promise<Order> {
     return this.orderService.addOrder(orderData);
   }
+
+  @Get("orders")
+  getAllOrders(): Promise<Order[]> {
+    return this.orderService.findAll();
+  }
 }
